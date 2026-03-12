@@ -60,12 +60,12 @@
 
   <!-- Title -->
   <text x="310" y="175" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="72" font-weight="800" fill="white" filter="url(#textshadow)">
-    Rule<tspan fill="url(#accent)">Sync</tspan>
+    Open<tspan fill="url(#accent)">Spec</tspan>
   </text>
 
   <!-- Tagline -->
   <text x="315" y="220" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="22" fill="#94a3b8" letter-spacing="0.5">
-    Define once. Sync everywhere.
+    Define once. Spec everywhere.
   </text>
 
   <!-- Target badges -->

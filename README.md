@@ -1,15 +1,15 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="RuleSync — Define once. Sync everywhere." width="100%" />
+  <img src="assets/banner.svg" alt="OpenSpec — Define once. Spec everywhere." width="100%" />
 </p>
 
 <p align="center">
   <strong>The universal AI context transpiler.</strong><br/>
-  Write your project rules once. RuleSync generates the correct context file for every AI tool in your stack.
+  Write your project rules once. OpenSpec generates the correct context file for every AI tool in your stack.
 </p>
 
 <p align="center">
   <a href="#-quickstart"><strong>Quickstart</strong></a> ·
-  <a href="#-why-rulesync"><strong>Why?</strong></a> ·
+  <a href="#-why-openspec"><strong>Why?</strong></a> ·
   <a href="#%EF%B8%8F-architecture"><strong>Architecture</strong></a> ·
   <a href="#-configuration"><strong>Config</strong></a> ·
   <a href="#-contributing"><strong>Contributing</strong></a>
@@ -44,13 +44,13 @@ When you update a convention — say, _"always use parameterized queries"_ — y
 ## The Solution
 
 ```
-.rulesync/modules/           ← You write rules HERE (once)
+.openspec/modules/           ← You write rules HERE (once)
   ├── shared.md
   ├── frontend.md
   ├── backend.md
   └── testing.md
         │
-        ▼  rulesync sync
+        ▼  openspec sync
         │
   CLAUDE.md                  ← Generated
   .cursorrules               ← Generated
@@ -69,33 +69,33 @@ When you update a convention — say, _"always use parameterized queries"_ — y
 
 ```bash
 # Install
-npm install -g rulesync
+npm install -g openspec
 
 # Initialize in your project
 cd your-project
-rulesync init
+openspec init
 
 # Edit your rules
-# (customize the modules in .rulesync/modules/)
+# (customize the modules in .openspec/modules/)
 
 # Generate all AI context files
-rulesync sync
+openspec sync
 
 # Or auto-sync on every change
-rulesync watch
+openspec watch
 ```
 
 That's it. Every AI tool in your stack now reads the same rules.
 
 ---
 
-## 🧠 Why RuleSync?
+## 🧠 Why OpenSpec?
 
 <table>
 <tr>
 <td width="50%">
 
-### Without RuleSync
+### Without OpenSpec
 
 ```
 ❌ Update rule in CLAUDE.md
@@ -108,11 +108,11 @@ That's it. Every AI tool in your stack now reads the same rules.
 </td>
 <td width="50%">
 
-### With RuleSync
+### With OpenSpec
 
 ```
-✅ Update rule in .rulesync/modules/backend.md
-✅ Run 'rulesync sync' (or auto-watch)
+✅ Update rule in .openspec/modules/backend.md
+✅ Run 'openspec sync' (or auto-watch)
 ✅ All 7 files updated instantly
 ✅ Every AI tool follows the same conventions
 ✅ Single source of truth in version control
@@ -128,7 +128,7 @@ That's it. Every AI tool in your stack now reads the same rules.
 
 ### 1. Modular Rule Files
 
-Rules live in `.rulesync/modules/` as Markdown files with optional YAML frontmatter:
+Rules live in `.openspec/modules/` as Markdown files with optional YAML frontmatter:
 
 ```markdown
 ---
@@ -179,7 +179,7 @@ tags: [frontend, react]
 
 ### 3. Per-Target Rendering
 
-RuleSync doesn't just concatenate files — it **adapts the output** for each tool's conventions:
+OpenSpec doesn't just concatenate files — it **adapts the output** for each tool's conventions:
 
 - **Claude Code** → flat `##` headings, no separators (Claude prefers dense context)
 - **Cursor** → `##` headings with glob comments for scoped rules
@@ -191,26 +191,26 @@ RuleSync doesn't just concatenate files — it **adapts the output** for each to
 ## 🔧 CLI Reference
 
 ```
-Usage: rulesync [command] [options]
+Usage: openspec [command] [options]
 
 Commands:
-  init              Scaffold .rulesync/ with config + example modules
+  init              Scaffold .openspec/ with config + example modules
   sync [--quiet]    Compile modules → generate all AI context files
   watch             Watch for module changes, auto-sync on save
   status            Show modules, targets, and sync status
   diff              Preview what changes sync would make
   add <name>        Create a new rule module (--priority, --targets, --tags)
   hooks [--remove]  Install/remove git pre-commit hook
-  clean             Remove all generated files (only rulesync-managed)
+  clean             Remove all generated files (only openspec-managed)
   help [command]    Show help for a command
 ```
 
-### `rulesync init`
+### `openspec init`
 
-Creates the `.rulesync/` directory with a config file and four example modules:
+Creates the `.openspec/` directory with a config file and four example modules:
 
 ```
-.rulesync/
+.openspec/
   config.yaml
   modules/
     shared.md       ← Core project rules
@@ -219,12 +219,12 @@ Creates the `.rulesync/` directory with a config file and four example modules:
     testing.md      ← Testing standards
 ```
 
-### `rulesync sync`
+### `openspec sync`
 
 Reads all modules, filters per target, renders, and writes output files:
 
 ```
-$ rulesync sync
+$ openspec sync
 
 Found 4 module(s): shared, backend, frontend, testing
 
@@ -239,41 +239,41 @@ Found 4 module(s): shared, backend, frontend, testing
 ✓ Synced 7 target(s) successfully.
 ```
 
-### `rulesync watch`
+### `openspec watch`
 
-Runs an initial sync, then watches `.rulesync/modules/` for changes:
+Runs an initial sync, then watches `.openspec/modules/` for changes:
 
 ```
-$ rulesync watch
+$ openspec watch
 
 ✓ Synced 7 target(s) successfully.
 
-👀 Watching for changes in .rulesync/modules
+👀 Watching for changes in .openspec/modules
    Press Ctrl+C to stop.
 
-⚡ Modified: .rulesync/modules/backend.md
+⚡ Modified: .openspec/modules/backend.md
 ✓ Synced 7 target(s)
 ```
 
-### `rulesync hooks`
+### `openspec hooks`
 
 Installs a git pre-commit hook that auto-syncs before every commit:
 
 ```bash
-rulesync hooks           # Install pre-commit hook
-rulesync hooks --remove  # Remove it
+openspec hooks           # Install pre-commit hook
+openspec hooks --remove  # Remove it
 ```
 
-This ensures generated files never fall out of sync, even if a developer forgets to run `rulesync sync`.
+This ensures generated files never fall out of sync, even if a developer forgets to run `openspec sync`.
 
-### `rulesync diff`
+### `openspec diff`
 
 Preview what changes `sync` would make without writing any files:
 
 ```
-$ rulesync diff
+$ openspec diff
 
-rulesync diff — preview changes
+openspec diff — preview changes
 
 + Claude Code (CLAUDE.md) (new file: CLAUDE.md)
 ~ Cursor (.cursorrules) (.cursorrules)
@@ -281,29 +281,29 @@ rulesync diff — preview changes
   + - Updated rule
   Gemini (GEMINI.md) — no changes
 
-Run 'rulesync sync' to apply these changes.
+Run 'openspec sync' to apply these changes.
 ```
 
-### `rulesync add <name>`
+### `openspec add <name>`
 
 Quickly scaffold a new module:
 
 ```bash
-rulesync add "api security"                              # Creates api-security.md
-rulesync add auth --priority 15 --targets claude,cursor   # With options
-rulesync add styling --tags css,frontend                  # With tags
+openspec add "api security"                              # Creates api-security.md
+openspec add auth --priority 15 --targets claude,cursor   # With options
+openspec add styling --tags css,frontend                  # With tags
 ```
 
-### `rulesync status`
+### `openspec status`
 
 Shows current modules and whether each target file exists and is managed:
 
 ```
-$ rulesync status
+$ openspec status
 
-rulesync status
+openspec status
 
-Modules: (.rulesync/modules)
+Modules: (.openspec/modules)
   Project Overview (priority: 10)
   Backend Conventions [backend, api] (priority: 20)
   Frontend Conventions [frontend, react] (priority: 20)
@@ -314,7 +314,7 @@ Targets:
   Cursor (.cursorrules): synced
   Gemini (GEMINI.md): synced
   GitHub Copilot: synced
-  Aider (.aiderrules): missing — run 'rulesync sync'
+  Aider (.aiderrules): missing — run 'openspec sync'
   OpenAI Codex (AGENTS.md): synced
   Windsurf (.windsurfrules): synced
 ```
@@ -323,16 +323,16 @@ Targets:
 
 ## ⚙️ Configuration
 
-Config lives at `.rulesync/config.yaml`:
+Config lives at `.openspec/config.yaml`:
 
 ```yaml
 version: 1
-modulesDir: ".rulesync/modules"
+modulesDir: ".openspec/modules"
 
 # Optional global header/footer for all outputs
 shared:
   header: "# Project AI Rules"
-  footer: "---\nGenerated by rulesync"
+  footer: "---\nGenerated by openspec"
 
 targets:
   claude:
@@ -369,7 +369,7 @@ targets:
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | `version` | `number` | `1` | Config version (for future migrations) |
-| `modulesDir` | `string` | `.rulesync/modules` | Where to find module files |
+| `modulesDir` | `string` | `.openspec/modules` | Where to find module files |
 | `shared.header` | `string` | — | Prepended to all outputs |
 | `shared.footer` | `string` | — | Appended to all outputs |
 | `targets.<name>.enabled` | `boolean` | `true` | Enable/disable a target |
@@ -379,14 +379,14 @@ targets:
 
 ### Config file locations
 
-RuleSync searches for config in this order:
+OpenSpec searches for config in this order:
 
-1. `.rulesync/config.yaml`
-2. `.rulesync/config.yml`
-3. `.rulesync/config.json`
-4. `rulesync.config.yaml`
-5. `rulesync.config.yml`
-6. `rulesync.config.json`
+1. `.openspec/config.yaml`
+2. `.openspec/config.yml`
+3. `.openspec/config.json`
+4. `openspec.config.yaml`
+5. `openspec.config.yml`
+6. `openspec.config.json`
 
 ---
 
@@ -394,7 +394,7 @@ RuleSync searches for config in this order:
 
 ```
 ┌──────────────────────────────────────────────────────────┐
-│                    .rulesync/modules/                     │
+│                    .openspec/modules/                     │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐ │
 │  │shared.md │  │frontend  │  │backend   │  │testing   │ │
 │  │prio: 10  │  │prio: 20  │  │prio: 20  │  │prio: 30  │ │
@@ -429,9 +429,9 @@ RuleSync searches for config in this order:
 
 | Layer | Command | When it runs | Use case |
 |-------|---------|-------------|----------|
-| **CLI** | `rulesync sync` | Manual / CI | One-shot generation |
-| **Watcher** | `rulesync watch` | During development | Auto-sync on save |
-| **Git Hook** | `rulesync hooks` | Pre-commit | Safety net — never commit stale files |
+| **CLI** | `openspec sync` | Manual / CI | One-shot generation |
+| **Watcher** | `openspec watch` | During development | Auto-sync on save |
+| **Git Hook** | `openspec hooks` | Pre-commit | Safety net — never commit stale files |
 
 ### Tech Stack
 
@@ -449,7 +449,7 @@ RuleSync searches for config in this order:
 ## 🗂️ Project Structure
 
 ```
-rulesync/
+openspec/
 ├── src/
 │   ├── cli.ts              # CLI entry point (Commander)
 │   ├── compiler.ts          # Core compilation orchestrator
@@ -459,15 +459,15 @@ rulesync/
 │   ├── watcher.ts           # File watcher (chokidar)
 │   ├── types.ts             # TypeScript types & defaults
 │   ├── commands/
-│   │   ├── init.ts          # 'rulesync init' scaffolding
-│   │   ├── sync.ts          # 'rulesync sync' handler
-│   │   └── status.ts        # 'rulesync status' handler
+│   │   ├── init.ts          # 'openspec init' scaffolding
+│   │   ├── sync.ts          # 'openspec sync' handler
+│   │   └── status.ts        # 'openspec status' handler
 │   └── targets/
 │       └── index.ts         # Per-target renderers
 ├── assets/
 │   ├── banner.svg           # README banner
 │   └── logo.svg             # Project icon
-├── .rulesync/               # Example config (dogfooding)
+├── .openspec/               # Example config (dogfooding)
 │   ├── config.yaml
 │   └── modules/
 ├── package.json
@@ -484,8 +484,8 @@ Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
 ### Quick dev setup
 
 ```bash
-git clone https://github.com/user/rulesync.git
-cd rulesync
+git clone https://github.com/user/openspec.git
+cd openspec
 npm install
 npm run dev -- init    # Test the CLI via tsx
 npm run dev -- sync
@@ -495,7 +495,7 @@ npm run build          # Compile TypeScript
 ### Ideas for contributions
 
 - **New targets** — Add renderers for new AI tools as they emerge
-- **MCP server mode** — `rulesync mcp` for native Claude/Cursor integration
+- **MCP server mode** — `openspec mcp` for native Claude/Cursor integration
 - **Module inheritance** — `extends: base.md` for DRY composition
 - **Template variables** — `{{projectName}}` interpolation
 - **VS Code extension** — GUI for managing modules
@@ -511,11 +511,11 @@ npm run build          # Compile TypeScript
 - [x] File watcher with debounced auto-sync
 - [x] Git pre-commit hook integration
 - [x] `init` / `sync` / `watch` / `status` / `clean` / `diff` / `add` commands
-- [x] `rulesync diff` — preview changes before syncing
-- [x] `rulesync add <name>` — scaffold new modules from CLI
+- [x] `openspec diff` — preview changes before syncing
+- [x] `openspec add <name>` — scaffold new modules from CLI
 - [x] CI pipeline (GitHub Actions — Linux/macOS/Windows, Node 18/20/22)
 - [x] Test suite (vitest, 28 tests)
-- [ ] `npx rulesync` — zero-install usage (publish to npm)
+- [ ] `npx openspec` — zero-install usage (publish to npm)
 - [ ] MCP server mode for dynamic context
 - [ ] Module inheritance & composition
 - [ ] Template variable interpolation
@@ -533,5 +533,5 @@ MIT — see [LICENSE](LICENSE) for details.
 
 <p align="center">
   <strong>Stop copy-pasting AI rules.</strong><br/>
-  <code>npx rulesync init && npx rulesync sync</code>
+  <code>npx openspec init && npx openspec sync</code>
 </p>

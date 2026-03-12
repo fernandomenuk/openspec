@@ -1,10 +1,10 @@
 import { watch } from "chokidar";
 import { join } from "node:path";
 import chalk from "chalk";
-import type { RuleSyncConfig } from "./types.js";
+import type { OpenSpecConfig } from "./types.js";
 import { compileAll } from "./compiler.js";
 
-export function startWatcher(projectRoot: string, config: RuleSyncConfig): void {
+export function startWatcher(projectRoot: string, config: OpenSpecConfig): void {
   const modulesDir = join(projectRoot, config.modulesDir).replace(/\\/g, "/");
   const watchPattern = `${modulesDir}/**/*.md`;
 

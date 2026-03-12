@@ -11,7 +11,7 @@ export async function runSync(projectRoot: string, options: { quiet?: boolean })
   if (modules.length === 0) {
     if (!options.quiet) {
       console.log(chalk.yellow("⚠ No modules found in"), chalk.cyan(config.modulesDir));
-      console.log(chalk.dim("  Run 'rulesync init' to get started."));
+      console.log(chalk.dim("  Run 'openspec init' to get started."));
     }
     process.exitCode = 1;
     return;

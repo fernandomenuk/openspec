@@ -1,10 +1,10 @@
 {
-  "name": "rulesync",
+  "name": "openspec",
   "version": "0.1.0",
-  "description": "Universal AI context transpiler. Define rules once, sync everywhere.",
+  "description": "Universal AI context transpiler. Define once. Spec everywhere.",
   "type": "module",
   "bin": {
-    "rulesync": "./dist/cli.js"
+    "openspec": "./dist/cli.js"
   },
   "scripts": {
     "build": "tsc",

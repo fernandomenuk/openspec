@@ -1,15 +1,15 @@
 import { readFile, access } from "node:fs/promises";
 import { join } from "node:path";
 import yaml from "js-yaml";
-import { DEFAULT_CONFIG, type RuleSyncConfig, type TargetConfig } from "./types.js";
+import { DEFAULT_CONFIG, type OpenSpecConfig, type TargetConfig } from "./types.js";
 
 const CONFIG_FILENAMES = [
-  ".rulesync/config.yaml",
-  ".rulesync/config.yml",
-  ".rulesync/config.json",
-  "rulesync.config.yaml",
-  "rulesync.config.yml",
-  "rulesync.config.json",
+  ".openspec/config.yaml",
+  ".openspec/config.yml",
+  ".openspec/config.json",
+  "openspec.config.yaml",
+  "openspec.config.yml",
+  "openspec.config.json",
 ];
 
 export async function findConfigFile(projectRoot: string): Promise<string | null> {
@@ -25,7 +25,7 @@ export async function findConfigFile(projectRoot: string): Promise<string | null
   return null;
 }
 
-export async function loadConfig(projectRoot: string): Promise<RuleSyncConfig> {
+export async function loadConfig(projectRoot: string): Promise<OpenSpecConfig> {
   const configPath = await findConfigFile(projectRoot);
 
   if (!configPath) {
@@ -33,16 +33,16 @@ export async function loadConfig(projectRoot: string): Promise<RuleSyncConfig> {
   }
 
   const raw = await readFile(configPath, "utf-8");
-  let parsed: Partial<Omit<RuleSyncConfig, "targets"> & { targets?: Record<string, TargetConfig | false> }>;
+  let parsed: Partial<Omit<OpenSpecConfig, "targets"> & { targets?: Record<string, TargetConfig | false> }>;
 
   if (configPath.endsWith(".json")) {
     parsed = JSON.parse(raw);
   } else {
-    parsed = yaml.load(raw) as Partial<RuleSyncConfig>;
+    parsed = yaml.load(raw) as Partial<OpenSpecConfig>;
   }
 
   // Deep merge with defaults
-  const config: RuleSyncConfig = {
+  const config: OpenSpecConfig = {
     version: parsed.version ?? DEFAULT_CONFIG.version,
     modulesDir: parsed.modulesDir ?? DEFAULT_CONFIG.modulesDir,
     shared: parsed.shared ?? DEFAULT_CONFIG.shared,

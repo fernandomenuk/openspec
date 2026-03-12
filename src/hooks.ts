@@ -2,16 +2,16 @@ import { writeFile, readFile, access, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 
 const HOOK_SCRIPT = `#!/bin/sh
-# rulesync: auto-sync AI context files on commit
-# To remove: delete this file or run 'rulesync hooks --remove'
+# openspec: auto-sync AI context files on commit
+# To remove: delete this file or run 'openspec hooks --remove'
 
 if command -v npx >/dev/null 2>&1; then
-  npx rulesync sync --quiet 2>/dev/null
+  npx openspec sync --quiet 2>/dev/null
   git add CLAUDE.md .cursorrules GEMINI.md AGENTS.md .aiderrules .windsurfrules .github/copilot-instructions.md 2>/dev/null || true
 fi
 `;
 
-const HOOK_MARKER = "# rulesync:";
+const HOOK_MARKER = "# openspec:";
 
 export async function installHook(projectRoot: string): Promise<boolean> {
   const hooksDir = join(projectRoot, ".git", "hooks");

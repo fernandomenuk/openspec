@@ -7,7 +7,7 @@ import { loadConfig, findConfigFile } from "../src/config.js";
 let tempDir: string;
 
 beforeEach(async () => {
-  tempDir = await mkdtemp(join(tmpdir(), "rulesync-test-"));
+  tempDir = await mkdtemp(join(tmpdir(), "openspec-test-"));
 });
 
 afterEach(async () => {
@@ -15,19 +15,19 @@ afterEach(async () => {
 });
 
 describe("findConfigFile", () => {
-  it("finds .rulesync/config.yaml", async () => {
-    await mkdir(join(tempDir, ".rulesync"), { recursive: true });
-    await writeFile(join(tempDir, ".rulesync", "config.yaml"), "version: 1");
+  it("finds .openspec/config.yaml", async () => {
+    await mkdir(join(tempDir, ".openspec"), { recursive: true });
+    await writeFile(join(tempDir, ".openspec", "config.yaml"), "version: 1");
 
     const result = await findConfigFile(tempDir);
     expect(result).toContain("config.yaml");
   });
 
-  it("finds rulesync.config.json", async () => {
-    await writeFile(join(tempDir, "rulesync.config.json"), '{"version": 1}');
+  it("finds openspec.config.json", async () => {
+    await writeFile(join(tempDir, "openspec.config.json"), '{"version": 1}');
 
     const result = await findConfigFile(tempDir);
-    expect(result).toContain("rulesync.config.json");
+    expect(result).toContain("openspec.config.json");
   });
 
   it("returns null when no config exists", async () => {
@@ -35,13 +35,13 @@ describe("findConfigFile", () => {
     expect(result).toBeNull();
   });
 
-  it("prefers .rulesync/config.yaml over rulesync.config.yaml", async () => {
-    await mkdir(join(tempDir, ".rulesync"), { recursive: true });
-    await writeFile(join(tempDir, ".rulesync", "config.yaml"), "version: 1");
-    await writeFile(join(tempDir, "rulesync.config.yaml"), "version: 1");
+  it("prefers .openspec/config.yaml over openspec.config.yaml", async () => {
+    await mkdir(join(tempDir, ".openspec"), { recursive: true });
+    await writeFile(join(tempDir, ".openspec", "config.yaml"), "version: 1");
+    await writeFile(join(tempDir, "openspec.config.yaml"), "version: 1");
 
     const result = await findConfigFile(tempDir);
-    expect(result).toContain(join(".rulesync", "config.yaml"));
+    expect(result).toContain(join(".openspec", "config.yaml"));
   });
 });
 
@@ -50,15 +50,15 @@ describe("loadConfig", () => {
     const config = await loadConfig(tempDir);
 
     expect(config.version).toBe(1);
-    expect(config.modulesDir).toBe(".rulesync/modules");
+    expect(config.modulesDir).toBe(".openspec/modules");
     expect(config.targets.claude.enabled).toBe(true);
     expect(config.targets.claude.output).toBe("CLAUDE.md");
   });
 
   it("merges user config with defaults", async () => {
-    await mkdir(join(tempDir, ".rulesync"), { recursive: true });
+    await mkdir(join(tempDir, ".openspec"), { recursive: true });
     await writeFile(
-      join(tempDir, ".rulesync", "config.yaml"),
+      join(tempDir, ".openspec", "config.yaml"),
       `
 version: 1
 targets:
@@ -79,9 +79,9 @@ targets:
   });
 
   it("loads JSON config", async () => {
-    await mkdir(join(tempDir, ".rulesync"), { recursive: true });
+    await mkdir(join(tempDir, ".openspec"), { recursive: true });
     await writeFile(
-      join(tempDir, ".rulesync", "config.json"),
+      join(tempDir, ".openspec", "config.json"),
       JSON.stringify({
         version: 1,
         modulesDir: "custom/modules",
@@ -97,9 +97,9 @@ targets:
   });
 
   it("handles target set to false (disabled shorthand)", async () => {
-    await mkdir(join(tempDir, ".rulesync"), { recursive: true });
+    await mkdir(join(tempDir, ".openspec"), { recursive: true });
     await writeFile(
-      join(tempDir, ".rulesync", "config.yaml"),
+      join(tempDir, ".openspec", "config.yaml"),
       `
 version: 1
 targets:

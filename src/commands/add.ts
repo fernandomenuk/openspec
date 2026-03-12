@@ -66,5 +66,5 @@ export async function runAdd(
   await writeFile(filePath, content, "utf-8");
 
   console.log(chalk.green(`Created module: ${config.modulesDir}/${slug}.md`));
-  console.log(chalk.dim(`  Edit it, then run 'rulesync sync' to regenerate.`));
+  console.log(chalk.dim(`  Edit it, then run 'openspec sync' to regenerate.`));
 }

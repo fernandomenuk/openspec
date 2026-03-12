@@ -1,13 +1,13 @@
-# Contributing to RuleSync
+# Contributing to OpenSpec
 
-Thanks for your interest in contributing! RuleSync is a community-driven project and we welcome all contributions.
+Thanks for your interest in contributing! OpenSpec is a community-driven project and we welcome all contributions.
 
 ## Getting Started
 
 ```bash
 # Fork and clone
-git clone https://github.com/<your-username>/rulesync.git
-cd rulesync
+git clone https://github.com/<your-username>/openspec.git
+cd openspec
 
 # Install dependencies
 npm install
@@ -80,7 +80,7 @@ refactor: extract renderer interface
 ## Reporting Issues
 
 - Use GitHub Issues for bugs and feature requests
-- Include your Node.js version, OS, and `rulesync --version`
+- Include your Node.js version, OS, and `openspec --version`
 - For bugs, include the minimal config/modules to reproduce
 
 ## Code of Conduct

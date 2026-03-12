@@ -23,9 +23,9 @@ export interface TargetConfig {
   scoped?: boolean;          // Whether this target supports scoped/per-directory rules
 }
 
-export interface RuleSyncConfig {
+export interface OpenSpecConfig {
   version: number;
-  modulesDir: string;        // Default: ".rulesync/modules"
+  modulesDir: string;        // Default: ".openspec/modules"
   targets: Record<string, TargetConfig>;
   shared?: {
     header?: string;         // Global header prepended to all outputs
@@ -42,9 +42,9 @@ export interface SyncResult {
   error?: string;
 }
 
-export const DEFAULT_CONFIG: RuleSyncConfig = {
+export const DEFAULT_CONFIG: OpenSpecConfig = {
   version: 1,
-  modulesDir: ".rulesync/modules",
+  modulesDir: ".openspec/modules",
   targets: {
     claude: {
       enabled: true,

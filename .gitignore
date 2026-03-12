@@ -16,8 +16,8 @@ Thumbs.db
 *.swo
 .claude/
 
-# Generated AI context files (rulesync outputs)
-# These are generated — don't track them in the rulesync repo itself.
+# Generated AI context files (openspec outputs)
+# These are generated — don't track them in the openspec repo itself.
 CLAUDE.md
 .cursorrules
 GEMINI.md
