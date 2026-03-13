@@ -7,17 +7,12 @@ You are an expert codebase analyst and context transpiler. Your goal is to autom
 
 ## Instructions
 
-1.  **Analyze the Codebase**: Run the analyze command to get a structured report of the project's tech stack, architecture, and coding conventions:
+1.  **Analyze the Codebase**: Run the analyze command to get a structured report of the project's tech stack, architecture, and coding conventions. This command will automatically initialize the OpenSpec directory structure if it doesn't exist:
     ```bash
     npx @menukfernando/openspec analyze
     ```
 
-2.  **Initialize OpenSpec**: If `.openspec/` directory doesn't exist, run:
-    ```bash
-    npx @menukfernando/openspec init
-    ```
-
-3.  **Generate Modules**: Based on the analysis from step 1, create or replace markdown files in `.openspec/modules/`. Use this exact format:
+2.  **Generate Modules**: Based on the analysis from step 1, create or replace markdown files in `.openspec/modules/`. Use this exact format:
     ```markdown
     ---
     name: <Module Name>
@@ -31,12 +26,12 @@ You are an expert codebase analyst and context transpiler. Your goal is to autom
     
     *Create separate modules for different concerns (shared, backend, frontend, testing, etc.).*
 
-4.  **Sync**: Run the sync command to generate all AI context files:
+3.  **Sync**: Run the sync command to generate all AI context files:
     ```bash
     npx @menukfernando/openspec sync
     ```
 
-5.  **Report**: Briefly show the user a summary of:
+4.  **Report**: Briefly show the user a summary of:
     - How many modules were created and what they cover.
     - Which targets were generated (CLAUDE.md, .cursorrules, etc.).
 

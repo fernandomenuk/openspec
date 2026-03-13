@@ -14,23 +14,23 @@ interface AnalyzeOptions {
 }
 
 /**
- * Analyzes the codebase and outputs a structured report for AI rule generation
+ * Analyzes the codebase and outputs a structured report for AI rule generation.
+ * Automatically prepares the .openspec directory if missing.
  */
 export async function runAnalyze(
   root: string,
   options: AnalyzeOptions
 ): Promise<void> {
   const openspecDir = join(root, ".openspec");
+  const modulesDir = join(openspecDir, "modules");
 
-  // Auto-initialize if .openspec/ doesn't exist
-  if (!existsSync(openspecDir)) {
-    if (!options.quiet) {
-      console.log(
-        chalk.yellow("No .openspec/ directory found. Run `npx @menukfernando/openspec init` first.")
-      );
+  // Auto-prepare directory structure
+  if (!existsSync(modulesDir)) {
+    try {
+      await mkdir(modulesDir, { recursive: true });
+    } catch (err) {
+      // Ignore errors if directory exists or cannot be created
     }
-    process.exitCode = 1;
-    return;
   }
 
   if (!options.quiet) {

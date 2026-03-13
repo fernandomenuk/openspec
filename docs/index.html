@@ -922,9 +922,9 @@
     </a>
     <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
   </div>
-  <div class="install-box" onclick="navigator.clipboard.writeText('npx @menukfernando/openspec init');this.querySelector('.copy-icon').innerHTML='&#10003;'">
+  <div class="install-box" onclick="navigator.clipboard.writeText('/plugin marketplace add fernandomenuk/openspec');this.querySelector('.copy-icon').innerHTML='&#10003;'">
     <span class="prompt">$</span>
-    <span class="cmd">npx @menukfernando/openspec init</span>
+    <span class="cmd">/plugin marketplace add fernandomenuk/openspec</span>
     <span class="copy-icon">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
     </span>
@@ -940,9 +940,10 @@
         <span class="terminal-title">~/my-project</span>
       </div>
       <div class="terminal-body" id="terminal-demo">
-        <div class="line"><span class="prompt-sign">$</span> <span class="command">openspec sync</span></div>
-        <div class="line"><span class="output">&nbsp;</span></div>
-        <div class="line"><span class="success">&#10003;</span> <span class="output">Loaded <span class="number">4</span> modules from <span class="file">.openspec/modules/</span></span></div>
+        <div class="line"><span class="prompt-sign">$</span> <span class="command">npx @menukfernando/openspec analyze</span></div>
+        <div class="line"><span class="output">Analyzing codebase...</span></div>
+        <div class="line"><span class="success">&#10003;</span> <span class="output">Created <span class="file">.openspec/modules/</span></span></div>
+        <div class="line"><span class="output"># Codebase Analysis — OpenSpec</span></div>
         <div class="line"><span class="output">&nbsp;</span></div>
         <div class="line"><span class="arrow">&rarr;</span> <span class="target">CLAUDE.md</span> <span class="output">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class="success">written</span></div>
         <div class="line"><span class="arrow">&rarr;</span> <span class="target">.cursorrules</span> <span class="output">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class="success">written</span></div>
@@ -1046,40 +1047,36 @@
   <div class="container">
     <div class="reveal">
       <div class="section-label">How It Works</div>
-      <h2 class="section-title">Three steps. Zero manual work.</h2>
+      <h2 class="section-title">Zero manual work.</h2>
       <p class="section-subtitle">Let AI analyze your project and write the rules. OpenSpec compiles them into every format your tools need.</p>
     </div>
     <div class="steps">
       <div class="step reveal">
         <div class="step-number">1</div>
-        <h3>Initialize</h3>
-        <p>Scaffold your <code>.openspec/</code> directory for your AI agents.</p>
+        <h3>Add Plugin</h3>
+        <p>Enable OpenSpec in your AI agent session.</p>
         <div class="step-code">
-          <span class="kw">$</span> openspec init<br>
-          <span class="cmt"># Creates .openspec/config.yaml</span><br>
-          <span class="cmt"># Creates .openspec/modules/</span>
-        </div>
-      </div>
-      <div class="step reveal">
-        <div class="step-number">2</div>
-        <h3>Run /openspec:configure</h3>
-        <p>Claude Code analyzes your entire codebase and generates project-specific modules automatically. Zero manual work.</p>
-        <div class="step-code">
-          <span class="kw">$</span> openspec install<br>
-          <span class="cmt"># Then in Claude Code:</span><br>
-          <span class="str">/openspec:configure</span><br>
-          <span class="cmt"># Or install as a plugin:</span><br>
+          <span class="cmt"># Inside Claude Code:</span><br>
           <span class="str">/plugin marketplace add fernandomenuk/openspec</span><br>
           <span class="str">/plugin install openspec@openspec</span>
         </div>
       </div>
       <div class="step reveal">
-        <div class="step-number">3</div>
-        <h3>Sync</h3>
-        <p>One command generates all 7 context files, each intelligently adapted to its target tool.</p>
+        <div class="step-number">2</div>
+        <h3>Run /openspec:configure</h3>
+        <p>Claude analyzes your codebase, creates rule modules, and syncs everything automatically.</p>
         <div class="step-code">
-          <span class="kw">$</span> openspec sync<br>
-          <span class="str">&#10003; Synced 7 targets in 12ms</span>
+          <span class="str">/openspec:configure</span><br>
+          <span class="cmt"># AI does the work. You do nothing.</span>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-number">3</div>
+        <h3>Zero Drift</h3>
+        <p>Your AI agent now manages a single source of truth for every tool in your stack.</p>
+        <div class="step-code">
+          <span class="cmt"># One change syncs to:</span><br>
+          <span class="str">CLAUDE.md, .cursorrules, GEMINI.md...</span>
         </div>
       </div>
     </div>

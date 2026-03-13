@@ -27,19 +27,9 @@
 
 ## The Problem
 
-Every AI tool has its own context file:
+Every AI tool has its own context file (`CLAUDE.md`, `.cursorrules`, `GEMINI.md`, etc.). When project conventions evolve, you have to manually update **7 different files**. Miss one, and your AI agent starts writing inconsistent code. 
 
-| Tool | File |
-|------|------|
-| Claude Code | `CLAUDE.md` |
-| Cursor | `.cursorrules` |
-| Google Gemini | `GEMINI.md` |
-| GitHub Copilot | `.github/copilot-instructions.md` |
-| Aider | `.aiderrules` |
-| OpenAI Codex | `AGENTS.md` |
-| Windsurf | `.windsurfrules` |
-
-When project conventions evolve, you have to copy-paste updates into **7 different files**. Miss one, and an AI agent starts writing inconsistent code. Your team now has a **context fragmentation** problem. OpenSpec solves this by acting as the context infrastructure *for* your AI agents.
+OpenSpec solves this by acting as the **context layer** for your AI agents.
 
 ## The Solution
 
@@ -54,108 +44,40 @@ When project conventions evolve, you have to copy-paste updates into **7 differe
   CLAUDE.md                  ← Generated
   .cursorrules               ← Generated
   GEMINI.md                  ← Generated
-  AGENTS.md                  ← Generated
-  .aiderrules                ← Generated
-  .windsurfrules             ← Generated
-  .github/copilot-instructions.md  ← Generated
+  ... (7+ outputs)           ← Generated
 ```
 
 **One source of truth. Seven outputs. Zero manual work.**
 
 ---
 
-## ⚡ Quickstart (Agent-First Workflow)
+## ⚡ Truly Zero Manual Work (Recommended)
 
-OpenSpec is built for AI agents to manage autonomously.
+OpenSpec is built for AI agents to manage autonomously. You don't even need to initialize the project—the AI does it for you.
 
+### 1. Add to Claude Code
+Simply run these commands inside your Claude Code session:
 ```bash
-# 1. Install & Initialize
-npm install -g @menukfernando/openspec
-npx @menukfernando/openspec init
-
-# 2. Add the OpenSpec plugin to Claude Code (Recommended)
-openspec install    
-# Then in Claude Code, run: /openspec:configure
-
-# (Advanced) Install via Marketplace in Claude Code:
-# /plugin marketplace add fernandomenuk/openspec
-# /plugin install openspec@openspec
-
-# Option B: Use with any other AI Agent (Cursor, Gemini, etc.)
-# Simply tell your AI agent:
-# "Run 'openspec analyze', write rules to .openspec/modules/, then run 'openspec sync'."
+/plugin marketplace add fernandomenuk/openspec
+/plugin install openspec@openspec
 ```
 
-That's it. Every AI tool in your stack now reads the same rules, managed entirely by your primary AI assistant.
-
----
-
-## 🧠 Why OpenSpec?
-
-<table>
-<tr>
-<td width="50%">
-
-### Without OpenSpec
-
-```
-❌ Ask Claude to update CLAUDE.md
-❌ Forget to update .cursorrules
-❌ Cursor AI writes conflicting code
-❌ 2 hours debugging AI-generated drift
-❌ Team argues about which file is "correct"
-```
-
-</td>
-<td width="50%">
-
-### With OpenSpec
-
-```
-✅ Ask Claude to update project rules
-✅ Claude uses OpenSpec Agent Skill to sync
-✅ All 7 files updated instantly
-✅ Every AI tool follows the same conventions
-✅ Single source of truth in version control
-```
-
-</td>
-</tr>
-</table>
-
----
-
-## 📖 How It Works
-
-### 1. AI-Driven Rule Generation
-
-Your AI agent analyzes your codebase and writes modular Markdown files into `.openspec/modules/`. Use the `analyze` command to give your agent the context it needs:
-
+### 2. Configure Automatically
+Run the configuration command:
 ```bash
-openspec analyze
+/openspec:configure
 ```
+**That's it.** Claude will analyze your codebase, create the rules, and sync them to every tool in your stack.
 
-### 2. Smart Frontmatter
-
-Each module can control exactly where it appears:
-
-```yaml
 ---
-name: React Conventions
-priority: 20
 
-# Only include this module in Cursor and Claude outputs:
-targets: [cursor, claude]
+## 🛠️ CLI Workflow (Any Agent)
 
-# Or exclude from specific targets:
-excludeTargets: [aider]
+If you use Cursor, Windsurf, Aider, or any other agent, just tell them:
 
-# Hint which files this rule applies to:
-globs: ["src/components/**/*.tsx"]
+> *"Run `npx @menukfernando/openspec analyze`, use the output to write modular rules to `.openspec/modules/`, and then run sync."*
 
-tags: [frontend, react]
----
-```
+OpenSpec's `analyze` command provides a high-density structured report specifically designed for AI agents to understand your codebase conventions instantly.
 
 ---
 
@@ -165,87 +87,16 @@ tags: [frontend, react]
 Usage: openspec [command] [options]
 
 Commands:
-  init              Scaffold .openspec/ for AI agents
-  analyze           Deep codebase analysis for AI-powered rule generation
+  analyze           Deep codebase analysis for AI-powered rule generation (auto-inits)
   sync [--quiet]    Compile modules → generate all AI context files
   watch             Watch for module changes, auto-sync on save
   status            Show modules, targets, and sync status
   diff              Preview what changes sync would make
-  add <name>        Create a new rule module (--priority, --targets, --tags)
-  install           Install OpenSpec Claude Code Plugin
+  add <name>        Create a new rule module
+  install           Install OpenSpec Claude Code Plugin (Local)
   hooks [--remove]  Install/remove git pre-commit hook
   clean             Remove all generated files (only openspec-managed)
   help [command]    Show help for a command
-```
-
-### `openspec init`
-
-Creates the `.openspec/` directory for your AI agents to populate.
-
-### `openspec analyze`
-
-Performs deep codebase analysis and outputs a structured context document optimized for AI agents to write rules.
-
-```bash
-$ openspec analyze
-
-Analyzing codebase...
-# Codebase Analysis — my-app
-...
-## Instructions for AI Agent
-Using the analysis above, generate OpenSpec module files...
-```
-
-**Typical workflow with an AI agent:**
-
-```bash
-# In Claude Code, run:
-/openspec:configure
-
-# Or manually:
-openspec analyze    # Agent reads the output
-# → Agent writes .openspec/modules/*.md
-openspec sync       # Generate all 7 AI context files
-```
-
-### `openspec sync`
-
-Reads all modules, filters per target, and generates the output context files.
-
-### `openspec install`
-
-Installs the **OpenSpec Claude Plugin**. This adds the namespaced command `/openspec:configure` and a model-invoked **Skill** that allows Claude to automatically sync rules when they change.
-
----
-
-## 🗂️ Project Structure
-
-```
-openspec/
-├── .claude-plugin/      # Claude Plugin Metadata (plugin.json, marketplace.json)
-├── commands/            # Claude Plugin Commands (/openspec:configure)
-├── skills/              # Claude Agent Skills (automatic sync)
-├── src/
-│   ├── cli.ts           # CLI entry point
-│   ├── compiler.ts       # Core compilation engine
-│   ├── analyze/         # Codebase analysis logic
-│   └── targets/         # Per-target renderers
-├── .openspec/            # Configuration
-└── package.json
-```
-
----
-
-## 🤝 Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-```bash
-git clone https://github.com/fernandomenuk/openspec.git
-cd openspec
-npm install
-npm run dev -- init
-npm run dev -- sync
 ```
 
 ---
@@ -255,7 +106,7 @@ npm run dev -- sync
 - [x] Core transpiler engine
 - [x] 7 target outputs (Claude, Cursor, Gemini, Copilot, Aider, Codex, Windsurf)
 - [x] **Claude Code Plugin & Marketplace support**
-- [x] **Agent-First Workflow (Zero Manual Work)**
+- [x] **Truly Zero-Init Workflow**
 - [ ] MCP server mode for dynamic context
 - [ ] Module inheritance & composition
 - [ ] Monorepo support
@@ -270,5 +121,5 @@ MIT — see [LICENSE](LICENSE) for details.
 
 <p align="center">
   <strong>Stop copy-pasting AI rules.</strong><br/>
-  <code>npx @menukfernando/openspec init && npx @menukfernando/openspec sync</code>
+  <code>npx @menukfernando/openspec analyze && npx @menukfernando/openspec sync</code>
 </p>

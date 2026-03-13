@@ -18,7 +18,7 @@ You are an expert context transpiler. Use this skill to keep AI context files (`
     ```bash
     npx @menukfernando/openspec analyze
     ```
-    Use the output to write or update markdown files in `.openspec/modules/`.
+    This will automatically prepare the project structure if it's missing. Use the output to write or update markdown files in `.openspec/modules/`.
 
 3.  **Check Status**: To see which targets are synced:
     ```bash
@@ -27,5 +27,4 @@ You are an expert context transpiler. Use this skill to keep AI context files (`
 
 ## Guidelines
 - Always prefer `npx @menukfernando/openspec` to ensure the latest version is used.
-- If `.openspec/` is missing, initialize it first with `npx @menukfernando/openspec init`.
 - After syncing, verify the output files to ensure they match the project's requirements.

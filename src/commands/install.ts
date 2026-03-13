@@ -44,18 +44,16 @@ You are an expert codebase analyst and context transpiler. Your goal is to autom
 
 ## Instructions
 
-1.  **Analyze the Codebase**: Run the analyze command to get a structured report of the project's tech stack, architecture, and coding conventions:
+1.  **Analyze the Codebase**: Run the analyze command to get a structured report of the project's tech stack, architecture, and coding conventions. This command will automatically initialize the OpenSpec directory structure if it doesn't exist:
     \`\`\`bash
     npx @menukfernando/openspec analyze
     \`\`\`
 
-2.  **Initialize OpenSpec**: If \`.openspec/\` doesn't exist, run \`npx @menukfernando/openspec init\`.
+2.  **Generate Modules**: Based on the analysis from step 1, create or replace markdown files in \`.openspec/modules/\` with project-specific rules using the OpenSpec format.
 
-3.  **Generate Modules**: Based on the analysis from step 1, create or replace markdown files in \`.openspec/modules/\` with project-specific rules using the OpenSpec format.
+3.  **Sync**: Run \`npx @menukfernando/openspec sync\` to generate all AI context files.
 
-4.  **Sync**: Run \`npx @menukfernando/openspec sync\` to generate all AI context files.
-
-5.  **Report**: Briefly show the user a summary of what was generated.
+4.  **Report**: Briefly show the user a summary of what was generated.
 
 **IMPORTANT**: Perform all these steps automatically without asking for further instructions.
 `;
@@ -80,7 +78,7 @@ You are an expert context transpiler. Use this skill to keep AI context files (\
     \`\`\`bash
     npx @menukfernando/openspec analyze
     \`\`\`
-    Use the output to write or update markdown files in \`.openspec/modules/\`.
+    This will automatically prepare the project structure if it's missing. Use the output to write or update markdown files in \`.openspec/modules/\`.
 
 3.  **Check Status**: To see which targets are synced:
     \`\`\`bash
@@ -89,7 +87,6 @@ You are an expert context transpiler. Use this skill to keep AI context files (\
 
 ## Guidelines
 - Always prefer \`npx @menukfernando/openspec\` to ensure the latest version is used.
-- If \`.openspec/\` is missing, initialize it first with \`npx @menukfernando/openspec init\`.
 - After syncing, verify the output files to ensure they match the project's requirements.
 `;
 
