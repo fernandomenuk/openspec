@@ -628,6 +628,62 @@
     .step-code .str { color: var(--green); }
     .step-code .cmt { color: var(--text-dim); }
 
+    /* ── Guides ──────────────────────────────── */
+    .guides { background: var(--bg); position: relative; }
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 64px;
+    }
+    .guide-card {
+      display: flex;
+      flex-direction: column;
+      padding: 40px 32px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      transition: all 0.3s;
+    }
+    .guide-card:hover { border-color: var(--border-hover); transform: translateY(-4px); }
+    .guide-tag {
+      align-self: flex-start;
+      padding: 4px 12px;
+      background: var(--accent-glow);
+      color: var(--accent-light);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 20px;
+    }
+    .guide-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+    .guide-card p { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; flex-grow: 1; }
+    .guide-code-wrap { position: relative; }
+    .guide-code {
+      padding: 16px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .guide-code .cmd { color: var(--text); display: block; margin-bottom: 4px; }
+    .guide-code .cmt { color: var(--text-dim); font-style: italic; }
+    .guide-copy {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .guide-copy:hover { color: var(--text-muted); }
+
     /* ── Features ─────────────────────────────── */
     .features-grid {
       display: grid;
@@ -819,6 +875,7 @@
     @media (max-width: 900px) {
       .problem-grid { grid-template-columns: 1fr; }
       .steps { grid-template-columns: 1fr; }
+      .guides-grid { grid-template-columns: 1fr; }
       .features-grid { grid-template-columns: 1fr 1fr; }
       .commands-grid { grid-template-columns: 1fr; }
       .file-mess { grid-template-columns: 1fr 1fr; }
@@ -888,6 +945,7 @@
     <ul class="nav-links">
       <li><a href="#problem">Problem</a></li>
       <li><a href="#how-it-works">How it Works</a></li>
+      <li><a href="#guides">Setup Guides</a></li>
       <li><a href="#features">Features</a></li>
       <li><a href="#targets">Targets</a></li>
       <li><a href="#commands">Commands</a></li>
@@ -906,7 +964,7 @@
 <section class="hero">
   <div class="hero-badge">
     <span class="hero-badge-dot"></span>
-    Now on npm — v0.1.1
+    Now on npm — v0.2.0
   </div>
   <h1>
     Define once.<br>
@@ -916,9 +974,9 @@
     The universal AI context infrastructure. Let AI generate and manage your project rules, while OpenSpec automatically syncs them to every AI coding tool in your stack.
   </p>
   <div class="hero-actions">
-    <a href="https://github.com/fernandomenuk/openspec" class="btn btn-primary">
-      <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-      Get Started
+    <a href="#guides" class="btn btn-primary">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Setup Guide
     </a>
     <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
   </div>
@@ -1077,6 +1135,64 @@
         <div class="step-code">
           <span class="cmt"># One change syncs to:</span><br>
           <span class="str">CLAUDE.md, .cursorrules, GEMINI.md...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Guides ────────────────────────────── -->
+<section class="guides" id="guides">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Setup Guides</div>
+      <h2 class="section-title">Integration for every tool.</h2>
+      <p class="section-subtitle">Pick your primary tool and let OpenSpec handle the rest.</p>
+    </div>
+
+    <div class="guides-grid">
+      <!-- Guide 1: Claude -->
+      <div class="guide-card reveal">
+        <div class="guide-tag">Recommended</div>
+        <h3>Claude Code</h3>
+        <p>The most powerful way to use OpenSpec. Claude manages your rules autonomously through the marketplace plugin.</p>
+        <div class="guide-code-wrap">
+          <div class="guide-code">
+            <span class="cmt"># Add Marketplace</span>
+            <span class="cmd">/plugin marketplace add fernandomenuk/openspec</span>
+            <span class="cmt"># Install Plugin</span>
+            <span class="cmd">/plugin install openspec@openspec</span>
+            <span class="cmt"># Initialize & Sync</span>
+            <span class="cmd">/openspec:configure</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guide 2: Cursor / Aider -->
+      <div class="guide-card reveal">
+        <div class="guide-tag">Any Agent</div>
+        <h3>IDE & CLI Agents</h3>
+        <p>Using Cursor, Windsurf, or Aider? Simply prompt your agent to use the OpenSpec CLI autonomously.</p>
+        <div class="guide-code-wrap">
+          <div class="guide-code">
+            <span class="cmt"># Tell your AI Agent:</span>
+            <span class="cmd" style="font-size: 11px; white-space: normal;">"Run npx @menukfernando/openspec analyze, use it to write rules to .openspec/modules/, then sync."</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guide 3: Automation -->
+      <div class="guide-card reveal">
+        <div class="guide-tag">Infrastructure</div>
+        <h3>Continuous Sync</h3>
+        <p>Ensure your team is always aligned. Sync rules automatically on every commit or in your CI/CD pipeline.</p>
+        <div class="guide-code-wrap">
+          <div class="guide-code">
+            <span class="cmt"># Install Git Hook</span>
+            <span class="cmd">npx @menukfernando/openspec hooks</span>
+            <span class="cmt"># Or run in CI</span>
+            <span class="cmd">npx @menukfernando/openspec sync</span>
+          </div>
         </div>
       </div>
     </div>
