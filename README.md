@@ -1,4 +1,10 @@
 <p align="center">
+  <a href="README.md">English</a> | 
+  <a href="README.zh-CN.md">简体中文</a> | 
+  <a href="README.pt-BR.md">Português (Brasil)</a>
+</p>
+
+<p align="center">
   <img src="https://raw.githubusercontent.com/fernandomenuk/openspec/master/assets/banner.svg" alt="OpenSpec — The universal AI context infrastructure." width="100%" />
 </p>
 
