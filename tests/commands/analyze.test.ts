@@ -104,7 +104,7 @@ describe('App', () => {
   );
 }
 
-describe("generate integration", () => {
+describe("analyze integration", () => {
   it("should produce full markdown output for a realistic project", async () => {
     await setupRealisticProject(tempDir);
 

@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/fernandomenuk/openspec/master/assets/banner.svg" alt="OpenSpec — Define once. Spec everywhere." width="100%" />
+  <img src="https://raw.githubusercontent.com/fernandomenuk/openspec/master/assets/banner.svg" alt="OpenSpec — The universal AI context infrastructure." width="100%" />
 </p>
 
 <p align="center">
-  <strong>The universal AI context transpiler.</strong><br/>
-  Write your project rules once. OpenSpec generates the correct context file for every AI tool in your stack.
+  <strong>The universal AI context infrastructure.</strong><br/>
+  Let AI generate and manage your project rules, while OpenSpec automatically syncs them to every AI coding tool in your stack.
 </p>
 
 <p align="center">
@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.1.0-6366f1?style=flat-square" alt="Version" />
+  <img src="https://img.shields.io/badge/version-0.2.0-6366f1?style=flat-square" alt="Version" />
   <img src="https://img.shields.io/badge/license-MIT-22c55e?style=flat-square" alt="License" />
   <img src="https://img.shields.io/badge/node-%3E%3D18-3b82f6?style=flat-square" alt="Node" />
   <img src="https://img.shields.io/badge/TypeScript-5.x-3178c6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
@@ -39,18 +39,17 @@ Every AI tool has its own context file:
 | OpenAI Codex | `AGENTS.md` |
 | Windsurf | `.windsurfrules` |
 
-When you update a convention — say, _"always use parameterized queries"_ — you have to copy-paste it into **7 different files**. Miss one, and that AI starts writing bad code. Your team now has a **context fragmentation** problem.
+When project conventions evolve, you have to copy-paste updates into **7 different files**. Miss one, and an AI agent starts writing inconsistent code. Your team now has a **context fragmentation** problem. OpenSpec solves this by acting as the context infrastructure *for* your AI agents.
 
 ## The Solution
 
 ```
-.openspec/modules/           ← You write rules HERE (once)
+.openspec/modules/           ← AI writes your rules HERE
   ├── shared.md
   ├── frontend.md
-  ├── backend.md
-  └── testing.md
+  └── backend.md
         │
-        ▼  openspec sync
+        ▼  AI runs openspec sync
         │
   CLAUDE.md                  ← Generated
   .cursorrules               ← Generated
@@ -61,34 +60,33 @@ When you update a convention — say, _"always use parameterized queries"_ — y
   .github/copilot-instructions.md  ← Generated
 ```
 
-**One source of truth. Seven outputs. Zero drift.**
+**One source of truth. Seven outputs. Zero manual work.**
 
 ---
 
-## ⚡ Quickstart
+## ⚡ Quickstart (Agent-First Workflow)
+
+OpenSpec is built for AI agents to manage autonomously.
 
 ```bash
-# Install
+# 1. Install & Initialize
 npm install -g @menukfernando/openspec
-
-# Initialize in your project
-cd your-project
 npx @menukfernando/openspec init
 
-# Option A: Let AI analyze your codebase and write rules for you
-openspec generate   # outputs codebase analysis for your AI agent
+# 2. Add the OpenSpec plugin to Claude Code (Recommended)
+openspec install    
+# Then in Claude Code, run: /openspec:configure
 
-# Option B: Manually edit your rules
-# (customize the modules in .openspec/modules/)
+# (Advanced) Install via Marketplace in Claude Code:
+# /plugin marketplace add fernandomenuk/openspec
+# /plugin install openspec@openspec
 
-# Generate all AI context files
-openspec sync
-
-# Or auto-sync on every change
-openspec watch
+# Option B: Use with any other AI Agent (Cursor, Gemini, etc.)
+# Simply tell your AI agent:
+# "Run 'openspec analyze', write rules to .openspec/modules/, then run 'openspec sync'."
 ```
 
-That's it. Every AI tool in your stack now reads the same rules.
+That's it. Every AI tool in your stack now reads the same rules, managed entirely by your primary AI assistant.
 
 ---
 
@@ -101,7 +99,7 @@ That's it. Every AI tool in your stack now reads the same rules.
 ### Without OpenSpec
 
 ```
-❌ Update rule in CLAUDE.md
+❌ Ask Claude to update CLAUDE.md
 ❌ Forget to update .cursorrules
 ❌ Cursor AI writes conflicting code
 ❌ 2 hours debugging AI-generated drift
@@ -114,8 +112,8 @@ That's it. Every AI tool in your stack now reads the same rules.
 ### With OpenSpec
 
 ```
-✅ Update rule in .openspec/modules/backend.md
-✅ Run 'openspec sync' (or auto-watch)
+✅ Ask Claude to update project rules
+✅ Claude uses OpenSpec Agent Skill to sync
 ✅ All 7 files updated instantly
 ✅ Every AI tool follows the same conventions
 ✅ Single source of truth in version control
@@ -129,23 +127,12 @@ That's it. Every AI tool in your stack now reads the same rules.
 
 ## 📖 How It Works
 
-### 1. Modular Rule Files
+### 1. AI-Driven Rule Generation
 
-Rules live in `.openspec/modules/` as Markdown files with optional YAML frontmatter:
+Your AI agent analyzes your codebase and writes modular Markdown files into `.openspec/modules/`. Use the `analyze` command to give your agent the context it needs:
 
-```markdown
----
-name: Backend Conventions
-description: API and database rules for the backend
-priority: 20
-tags: [backend, api]
----
-
-- Use dependency injection for all services
-- All API endpoints must validate input with Zod schemas
-- Database queries must use parameterized statements
-- Use structured logging (pino), never console.log
-- Tenant ID must be extracted from JWT, never from request body
+```bash
+openspec analyze
 ```
 
 ### 2. Smart Frontmatter
@@ -170,25 +157,6 @@ tags: [frontend, react]
 ---
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `name` | `string` | Display name (defaults to filename) |
-| `description` | `string` | One-line description |
-| `priority` | `number` | Sort order — lower numbers appear first (default: `50`) |
-| `targets` | `string[]` | Whitelist: only include in these targets |
-| `excludeTargets` | `string[]` | Blacklist: exclude from these targets |
-| `globs` | `string[]` | File patterns this rule is relevant to |
-| `tags` | `string[]` | Organizational tags |
-
-### 3. Per-Target Rendering
-
-OpenSpec doesn't just concatenate files — it **adapts the output** for each tool's conventions:
-
-- **Claude Code** → flat `##` headings, no separators (Claude prefers dense context)
-- **Cursor** → `##` headings with glob comments for scoped rules
-- **Copilot** → `###` headings (fits within Copilot's instruction hierarchy)
-- **Others** → `##` headings with `---` separators for readability
-
 ---
 
 ## 🔧 CLI Reference
@@ -197,13 +165,14 @@ OpenSpec doesn't just concatenate files — it **adapts the output** for each to
 Usage: openspec [command] [options]
 
 Commands:
-  init              Scaffold .openspec/ with config + example modules
-  generate          Analyze codebase and output context for AI-powered rule generation
+  init              Scaffold .openspec/ for AI agents
+  analyze           Deep codebase analysis for AI-powered rule generation
   sync [--quiet]    Compile modules → generate all AI context files
   watch             Watch for module changes, auto-sync on save
   status            Show modules, targets, and sync status
   diff              Preview what changes sync would make
   add <name>        Create a new rule module (--priority, --targets, --tags)
+  install           Install OpenSpec Claude Code Plugin
   hooks [--remove]  Install/remove git pre-commit hook
   clean             Remove all generated files (only openspec-managed)
   help [command]    Show help for a command
@@ -211,290 +180,41 @@ Commands:
 
 ### `openspec init`
 
-Creates the `.openspec/` directory with a config file and four example modules:
+Creates the `.openspec/` directory for your AI agents to populate.
 
-```
-.openspec/
-  config.yaml
-  modules/
-    shared.md       ← Core project rules
-    frontend.md     ← Frontend conventions
-    backend.md      ← Backend conventions
-    testing.md      ← Testing standards
-```
+### `openspec analyze`
 
-### `openspec generate`
+Performs deep codebase analysis and outputs a structured context document optimized for AI agents to write rules.
 
-Performs deep codebase analysis — reading package.json, config files, directory structure, and actual source code — then outputs a structured context document. When run inside an AI agent (Claude Code, Cursor, etc.), the agent reads this output and uses it to write rich, project-specific module files.
-
-```
-$ openspec generate
+```bash
+$ openspec analyze
 
 Analyzing codebase...
 # Codebase Analysis — my-app
-
-## Tech Stack
-- **Languages**: TypeScript (42 files)
-- **Frontend**: React ^18.2.0
-- **Backend**: Express ^4.18.0
-- **Build**: Vite (vite.config.ts)
-- **Testing**: Vitest (vitest.config.ts)
-- **Styling**: Tailwind CSS
-- **Database**: Prisma
 ...
-
-## Code Samples
-### Component Example (src/components/UserCard.tsx)
-...
-
 ## Instructions for AI Agent
-Using the analysis above, generate the following OpenSpec module files...
-```
-
-Options:
-
-```bash
-openspec generate              # Markdown output to stdout (default)
-openspec generate --json       # JSON output for programmatic use
-openspec generate -o report.md # Write analysis to file
-openspec generate -q           # Suppress non-essential output
+Using the analysis above, generate OpenSpec module files...
 ```
 
 **Typical workflow with an AI agent:**
 
 ```bash
-# In Claude Code, Cursor, etc.:
-# "Run openspec generate and fill in my rules"
+# In Claude Code, run:
+/openspec:configure
 
-openspec generate   # AI reads the output
-# → AI writes .openspec/modules/shared.md, frontend.md, backend.md, testing.md
+# Or manually:
+openspec analyze    # Agent reads the output
+# → Agent writes .openspec/modules/*.md
 openspec sync       # Generate all 7 AI context files
 ```
 
 ### `openspec sync`
 
-Reads all modules, filters per target, renders, and writes output files:
+Reads all modules, filters per target, and generates the output context files.
 
-```
-$ openspec sync
+### `openspec install`
 
-Found 4 module(s): shared, backend, frontend, testing
-
-  ✓ Claude Code (CLAUDE.md)     → CLAUDE.md (4 modules, 1.0KB)
-  ✓ Cursor (.cursorrules)       → .cursorrules (4 modules, 1.0KB)
-  ✓ Gemini (GEMINI.md)          → GEMINI.md (4 modules, 1.2KB)
-  ✓ GitHub Copilot              → .github/copilot-instructions.md (4 modules, 1.0KB)
-  ✓ Aider (.aiderrules)         → .aiderrules (4 modules, 1.2KB)
-  ✓ OpenAI Codex (AGENTS.md)    → AGENTS.md (4 modules, 1.2KB)
-  ✓ Windsurf (.windsurfrules)   → .windsurfrules (4 modules, 1.2KB)
-
-✓ Synced 7 target(s) successfully.
-```
-
-### `openspec watch`
-
-Runs an initial sync, then watches `.openspec/modules/` for changes:
-
-```
-$ openspec watch
-
-✓ Synced 7 target(s) successfully.
-
-👀 Watching for changes in .openspec/modules
-   Press Ctrl+C to stop.
-
-⚡ Modified: .openspec/modules/backend.md
-✓ Synced 7 target(s)
-```
-
-### `openspec hooks`
-
-Installs a git pre-commit hook that auto-syncs before every commit:
-
-```bash
-openspec hooks           # Install pre-commit hook
-openspec hooks --remove  # Remove it
-```
-
-This ensures generated files never fall out of sync, even if a developer forgets to run `openspec sync`.
-
-### `openspec diff`
-
-Preview what changes `sync` would make without writing any files:
-
-```
-$ openspec diff
-
-openspec diff — preview changes
-
-+ Claude Code (CLAUDE.md) (new file: CLAUDE.md)
-~ Cursor (.cursorrules) (.cursorrules)
-  - - Old rule
-  + - Updated rule
-  Gemini (GEMINI.md) — no changes
-
-Run 'openspec sync' to apply these changes.
-```
-
-### `openspec add <name>`
-
-Quickly scaffold a new module:
-
-```bash
-openspec add "api security"                              # Creates api-security.md
-openspec add auth --priority 15 --targets claude,cursor   # With options
-openspec add styling --tags css,frontend                  # With tags
-```
-
-### `openspec status`
-
-Shows current modules and whether each target file exists and is managed:
-
-```
-$ openspec status
-
-openspec status
-
-Modules: (.openspec/modules)
-  Project Overview (priority: 10)
-  Backend Conventions [backend, api] (priority: 20)
-  Frontend Conventions [frontend, react] (priority: 20)
-  Testing Standards [testing] (priority: 30)
-
-Targets:
-  Claude Code (CLAUDE.md): synced
-  Cursor (.cursorrules): synced
-  Gemini (GEMINI.md): synced
-  GitHub Copilot: synced
-  Aider (.aiderrules): missing — run 'openspec sync'
-  OpenAI Codex (AGENTS.md): synced
-  Windsurf (.windsurfrules): synced
-```
-
----
-
-## ⚙️ Configuration
-
-Config lives at `.openspec/config.yaml`:
-
-```yaml
-version: 1
-modulesDir: ".openspec/modules"
-
-# Optional global header/footer for all outputs
-shared:
-  header: "# Project AI Rules"
-  footer: "---\nGenerated by openspec"
-
-targets:
-  claude:
-    enabled: true
-    output: CLAUDE.md
-
-  cursor:
-    enabled: true
-    output: .cursorrules
-    modules: [shared, frontend]   # Only include these modules
-
-  gemini:
-    enabled: true
-    output: GEMINI.md
-
-  copilot:
-    enabled: true
-    output: .github/copilot-instructions.md
-
-  aider:
-    enabled: false                # Disable this target entirely
-
-  codex:
-    enabled: true
-    output: AGENTS.md
-
-  windsurf:
-    enabled: true
-    output: .windsurfrules
-```
-
-### Config options
-
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| `version` | `number` | `1` | Config version (for future migrations) |
-| `modulesDir` | `string` | `.openspec/modules` | Where to find module files |
-| `shared.header` | `string` | — | Prepended to all outputs |
-| `shared.footer` | `string` | — | Appended to all outputs |
-| `targets.<name>.enabled` | `boolean` | `true` | Enable/disable a target |
-| `targets.<name>.output` | `string` | (per target) | Output file path |
-| `targets.<name>.modules` | `string[]` | (all) | Explicit module whitelist |
-| `targets.<name>.header` | `string` | — | Per-target header (overrides shared) |
-
-### Config file locations
-
-OpenSpec searches for config in this order:
-
-1. `.openspec/config.yaml`
-2. `.openspec/config.yml`
-3. `.openspec/config.json`
-4. `openspec.config.yaml`
-5. `openspec.config.yml`
-6. `openspec.config.json`
-
----
-
-## 🏗️ Architecture
-
-```
-┌──────────────────────────────────────────────────────────┐
-│                    .openspec/modules/                     │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐ │
-│  │shared.md │  │frontend  │  │backend   │  │testing   │ │
-│  │prio: 10  │  │prio: 20  │  │prio: 20  │  │prio: 30  │ │
-│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘ │
-└───────┼──────────────┼──────────────┼──────────────┼──────┘
-        │              │              │              │
-        ▼              ▼              ▼              ▼
-┌──────────────────────────────────────────────────────────┐
-│               Module Discovery & Filtering               │
-│  • Discover all .md files in modulesDir                   │
-│  • Parse YAML frontmatter (gray-matter)                  │
-│  • Sort by priority, then alphabetically                 │
-│  • Filter per target (whitelist/blacklist)                │
-└──────────────────────┬───────────────────────────────────┘
-                       │
-        ┌──────────────┼──────────────┐
-        ▼              ▼              ▼
-┌──────────────┐┌──────────────┐┌──────────────┐
-│Claude Renderer││Cursor Renderer││ Default      │
-│ Flat ## heads ││ ## + globs   ││ ## + ---     │
-└──────┬───────┘└──────┬───────┘└──────┬───────┘
-       │               │               │
-       ▼               ▼               ▼
-   CLAUDE.md      .cursorrules    GEMINI.md
-                                  AGENTS.md
-                                  .aiderrules
-                                  .windsurfrules
-                                  copilot-instructions.md
-```
-
-### Three integration layers
-
-| Layer | Command | When it runs | Use case |
-|-------|---------|-------------|----------|
-| **CLI** | `openspec sync` | Manual / CI | One-shot generation |
-| **Watcher** | `openspec watch` | During development | Auto-sync on save |
-| **Git Hook** | `openspec hooks` | Pre-commit | Safety net — never commit stale files |
-
-### Tech Stack
-
-| Component | Technology | Why |
-|-----------|-----------|-----|
-| Language | TypeScript (ESM) | Type safety, ecosystem |
-| CLI Framework | Commander.js | Battle-tested, zero config |
-| File Watching | chokidar | Cross-platform, efficient |
-| Frontmatter | gray-matter | Industry standard |
-| Config | js-yaml | YAML is friendlier for config |
-| Build | tsc | Simple, fast, no bundler needed |
+Installs the **OpenSpec Claude Plugin**. This adds the namespaced command `/openspec:configure` and a model-invoked **Skill** that allows Claude to automatically sync rules when they change.
 
 ---
 
@@ -502,67 +222,31 @@ OpenSpec searches for config in this order:
 
 ```
 openspec/
+├── .claude-plugin/      # Claude Plugin Metadata (plugin.json, marketplace.json)
+├── commands/            # Claude Plugin Commands (/openspec:configure)
+├── skills/              # Claude Agent Skills (automatic sync)
 ├── src/
-│   ├── cli.ts              # CLI entry point (Commander)
-│   ├── compiler.ts          # Core compilation orchestrator
-│   ├── config.ts            # Config discovery & loading
-│   ├── modules.ts           # Module discovery & filtering
-│   ├── hooks.ts             # Git hook install/remove
-│   ├── watcher.ts           # File watcher (chokidar)
-│   ├── types.ts             # TypeScript types & defaults
-│   ├── commands/
-│   │   ├── init.ts          # 'openspec init' scaffolding
-│   │   ├── generate.ts      # 'openspec generate' handler
-│   │   ├── sync.ts          # 'openspec sync' handler
-│   │   └── status.ts        # 'openspec status' handler
-│   ├── scanner/
-│   │   ├── types.ts          # ScanResult interfaces
-│   │   ├── context.ts        # Builds DetectorContext
-│   │   ├── sampler.ts        # Source file sampling
-│   │   ├── formatter.ts      # Markdown/JSON output formatting
-│   │   └── detectors/        # Stack detection modules
-│   │       ├── index.ts      # Orchestrator
-│   │       ├── language.ts   # TS/JS/Python/Go/Rust
-│   │       ├── framework.ts  # React/Next/Express/etc
-│   │       └── ...           # build-tool, testing, linting, etc.
-│   └── targets/
-│       └── index.ts         # Per-target renderers
-├── assets/
-│   ├── banner.svg           # README banner
-│   └── logo.svg             # Project icon
-├── .openspec/               # Example config (dogfooding)
-│   ├── config.yaml
-│   └── modules/
-├── package.json
-├── tsconfig.json
-└── LICENSE
+│   ├── cli.ts           # CLI entry point
+│   ├── compiler.ts       # Core compilation engine
+│   ├── analyze/         # Codebase analysis logic
+│   └── targets/         # Per-target renderers
+├── .openspec/            # Configuration
+└── package.json
 ```
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Quick dev setup
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ```bash
-git clone https://github.com/user/openspec.git
+git clone https://github.com/fernandomenuk/openspec.git
 cd openspec
 npm install
-npm run dev -- init    # Test the CLI via tsx
+npm run dev -- init
 npm run dev -- sync
-npm run build          # Compile TypeScript
 ```
-
-### Ideas for contributions
-
-- **New targets** — Add renderers for new AI tools as they emerge
-- **MCP server mode** — `openspec mcp` for native Claude/Cursor integration
-- **Module inheritance** — `extends: base.md` for DRY composition
-- **Template variables** — `{{projectName}}` interpolation
-- **VS Code extension** — GUI for managing modules
-- **Monorepo support** — Per-package module overrides
 
 ---
 
@@ -570,22 +254,11 @@ npm run build          # Compile TypeScript
 
 - [x] Core transpiler engine
 - [x] 7 target outputs (Claude, Cursor, Gemini, Copilot, Aider, Codex, Windsurf)
-- [x] YAML frontmatter with priority, targeting, tags
-- [x] File watcher with debounced auto-sync
-- [x] Git pre-commit hook integration
-- [x] `init` / `sync` / `watch` / `status` / `clean` / `diff` / `add` commands
-- [x] `openspec diff` — preview changes before syncing
-- [x] `openspec add <name>` — scaffold new modules from CLI
-- [x] `openspec generate` — AI-powered codebase analysis + rule generation
-- [x] CI pipeline (GitHub Actions — Linux/macOS/Windows, Node 18/20/22)
-- [x] Test suite (vitest, 68 tests)
-- [ ] `npx @menukfernando/openspec` — zero-install usage (publish to npm)
+- [x] **Claude Code Plugin & Marketplace support**
+- [x] **Agent-First Workflow (Zero Manual Work)**
 - [ ] MCP server mode for dynamic context
 - [ ] Module inheritance & composition
-- [ ] Template variable interpolation
 - [ ] Monorepo support
-- [ ] VS Code / JetBrains extensions
-- [ ] Remote module registries (share rules across repos)
 
 ---
 

@@ -1,7 +1,7 @@
 {
   "name": "@menukfernando/openspec",
   "version": "0.2.0",
-  "description": "Universal AI context transpiler. Define once. Spec everywhere.",
+  "description": "The universal AI context infrastructure. Let AI generate your project rules, we sync them everywhere.",
   "type": "module",
   "bin": {
     "openspec": "dist/cli.js"

@@ -8,17 +8,17 @@ import { runSync } from "./commands/sync.js";
 import { runStatus } from "./commands/status.js";
 import { runDiff } from "./commands/diff.js";
 import { runAdd } from "./commands/add.js";
-import { runGenerate } from "./commands/generate.js";
+import { runAnalyze } from "./commands/analyze.js";
 import { loadConfig } from "./config.js";
 import { startWatcher } from "./watcher.js";
 import { installHook, removeHook } from "./hooks.js";
-import { runSetupCommand } from "./commands/setup-command.js";
+import { runInstall } from "./commands/install.js";
 
 const program = new Command();
 
 program
   .name("openspec")
-  .description("Universal AI context transpiler. Define once. Spec everywhere.")
+  .description("The universal AI context infrastructure. Let AI generate your project rules, we sync them everywhere.")
   .version("0.2.0");
 
 program
@@ -105,22 +105,22 @@ program
   });
 
 program
-  .command("generate")
+  .command("analyze")
   .description("Analyze codebase and output context for AI-powered rule generation")
   .option("--json", "Output as JSON instead of markdown")
   .option("-o, --output <path>", "Write analysis to file instead of stdout")
   .option("-q, --quiet", "Suppress non-essential output")
   .action(async (options) => {
     const root = resolve(".");
-    await runGenerate(root, options);
+    await runAnalyze(root, options);
   });
 
 program
-  .command("setup-command")
-  .description("Install /openspec slash command for Claude Code")
+  .command("install")
+  .description("Install OpenSpec Claude Code Plugin")
   .action(async () => {
     const root = resolve(".");
-    await runSetupCommand(root);
+    await runInstall(root);
   });
 
 program

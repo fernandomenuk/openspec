@@ -7,15 +7,18 @@ import { runDetectors } from "../scanner/detectors/index.js";
 import { sampleSourceFiles } from "../scanner/sampler.js";
 import { formatMarkdown, formatJson } from "../scanner/formatter.js";
 
-interface GenerateOptions {
+interface AnalyzeOptions {
   json?: boolean;
   output?: string;
   quiet?: boolean;
 }
 
-export async function runGenerate(
+/**
+ * Analyzes the codebase and outputs a structured report for AI rule generation
+ */
+export async function runAnalyze(
   root: string,
-  options: GenerateOptions
+  options: AnalyzeOptions
 ): Promise<void> {
   const openspecDir = join(root, ".openspec");
 
@@ -31,7 +34,7 @@ export async function runGenerate(
   }
 
   if (!options.quiet) {
-    console.log(chalk.blue("Analyzing codebase..."));
+    console.log(chalk.blue("Analyzing codebase for rule generation..."));
   }
 
   // Build context
@@ -64,7 +67,7 @@ export async function runGenerate(
   if (!options.quiet && !options.output) {
     console.log(
       chalk.dim(
-        "\nAI agent: use the analysis above to write module files in .openspec/modules/, then run 'openspec sync'"
+        "\nAI agent: Use the analysis above to write module files in .openspec/modules/. Focus on actual patterns found in the samples."
       )
     );
   }

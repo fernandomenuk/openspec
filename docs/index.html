@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Primary SEO -->
-  <title>OpenSpec — Define once. Spec everywhere. | Universal AI Context Transpiler</title>
-  <meta name="description" content="Stop copy-pasting AI rules into 7 different files. OpenSpec is the universal AI context transpiler — write project rules once, generate context files for Claude Code, Cursor, GitHub Copilot, Gemini, Aider, Codex, and Windsurf automatically.">
+  <title>OpenSpec — The Universal AI Context Infrastructure</title>
+  <meta name="description" content="Let AI generate and manage your project rules, while OpenSpec automatically syncs them to every AI coding tool in your stack.">
   <meta name="keywords" content="openspec, AI context, AI rules, claude code, cursor rules, cursorrules, copilot instructions, gemini rules, aider rules, windsurf rules, codex agents, AI coding tools, context transpiler, developer tools, CLI tool, CLAUDE.md, .cursorrules, GEMINI.md, AI code generation, project conventions">
   <meta name="author" content="Menuk Fernando">
   <meta name="robots" content="index, follow">
@@ -15,22 +15,22 @@
   <!-- Open Graph / Facebook / LinkedIn -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://fernandomenuk.github.io/openspec/">
-  <meta property="og:title" content="OpenSpec — Define once. Spec everywhere.">
-  <meta property="og:description" content="The universal AI context transpiler. Write your project rules once, generate context files for Claude, Cursor, Copilot, Gemini, Aider, Codex & Windsurf. One source of truth. Seven outputs. Zero drift.">
+  <meta property="og:title" content="OpenSpec — The Universal AI Context Infrastructure">
+  <meta property="og:description" content="Let AI generate and manage your project rules, while OpenSpec automatically syncs them to every AI coding tool in your stack. One source of truth. Seven outputs. Zero manual work.">
   <meta property="og:image" content="https://fernandomenuk.github.io/openspec/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="OpenSpec — Define once. Spec everywhere. The universal AI context transpiler.">
+  <meta property="og:image:alt" content="OpenSpec — The universal AI context infrastructure.">
   <meta property="og:site_name" content="OpenSpec">
   <meta property="og:locale" content="en_US">
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://fernandomenuk.github.io/openspec/">
-  <meta name="twitter:title" content="OpenSpec — Define once. Spec everywhere.">
-  <meta name="twitter:description" content="Stop copy-pasting AI rules into 7 files. One source of truth for Claude, Cursor, Copilot, Gemini, Aider, Codex & Windsurf.">
+  <meta name="twitter:title" content="OpenSpec — The Universal AI Context Infrastructure">
+  <meta name="twitter:description" content="Let AI generate and manage your project rules, while OpenSpec automatically syncs them.">
   <meta name="twitter:image" content="https://fernandomenuk.github.io/openspec/og-image.png">
-  <meta name="twitter:image:alt" content="OpenSpec — The universal AI context transpiler">
+  <meta name="twitter:image:alt" content="OpenSpec — The universal AI context infrastructure">
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -38,7 +38,7 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "OpenSpec",
-    "description": "The universal AI context transpiler. Write your project rules once, generate context files for every AI coding tool automatically.",
+    "description": "The universal AI context infrastructure. Let AI generate and manage your project rules, while OpenSpec automatically syncs them to every AI coding tool in your stack.",
     "url": "https://fernandomenuk.github.io/openspec/",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Windows, macOS, Linux",
@@ -52,7 +52,7 @@
       "name": "Menuk Fernando",
       "url": "https://github.com/fernandomenuk"
     },
-    "softwareVersion": "0.1.1",
+    "softwareVersion": "0.2.0",
     "license": "https://opensource.org/licenses/MIT",
     "codeRepository": "https://github.com/fernandomenuk/openspec",
     "programmingLanguage": "TypeScript",
@@ -913,7 +913,7 @@
     <span class="gradient">Spec everywhere.</span>
   </h1>
   <p class="hero-sub">
-    The universal AI context transpiler. Write your project rules once and generate context files for every AI coding tool — automatically.
+    The universal AI context infrastructure. Let AI generate and manage your project rules, while OpenSpec automatically syncs them to every AI coding tool in your stack.
   </p>
   <div class="hero-actions">
     <a href="https://github.com/fernandomenuk/openspec" class="btn btn-primary">
@@ -1046,29 +1046,31 @@
   <div class="container">
     <div class="reveal">
       <div class="section-label">How It Works</div>
-      <h2 class="section-title">Three steps. Zero drift.</h2>
-      <p class="section-subtitle">Write your rules as modular Markdown files. OpenSpec compiles them into every format your tools need.</p>
+      <h2 class="section-title">Three steps. Zero manual work.</h2>
+      <p class="section-subtitle">Let AI analyze your project and write the rules. OpenSpec compiles them into every format your tools need.</p>
     </div>
     <div class="steps">
       <div class="step reveal">
         <div class="step-number">1</div>
         <h3>Initialize</h3>
-        <p>Scaffold your <code>.openspec/</code> directory with config and starter modules.</p>
+        <p>Scaffold your <code>.openspec/</code> directory for your AI agents.</p>
         <div class="step-code">
           <span class="kw">$</span> openspec init<br>
           <span class="cmt"># Creates .openspec/config.yaml</span><br>
-          <span class="cmt"># Creates .openspec/modules/*.md</span>
+          <span class="cmt"># Creates .openspec/modules/</span>
         </div>
       </div>
       <div class="step reveal">
         <div class="step-number">2</div>
-        <h3>Run /openspec</h3>
+        <h3>Run /openspec:configure</h3>
         <p>Claude Code analyzes your entire codebase and generates project-specific modules automatically. Zero manual work.</p>
         <div class="step-code">
-          <span class="kw">$</span> openspec setup-command<br>
+          <span class="kw">$</span> openspec install<br>
           <span class="cmt"># Then in Claude Code:</span><br>
-          <span class="str">/openspec</span><br>
-          <span class="cmt"># AI writes your modules for you</span>
+          <span class="str">/openspec:configure</span><br>
+          <span class="cmt"># Or install as a plugin:</span><br>
+          <span class="str">/plugin marketplace add fernandomenuk/openspec</span><br>
+          <span class="str">/plugin install openspec@openspec</span>
         </div>
       </div>
       <div class="step reveal">
@@ -1111,8 +1113,8 @@
         <div class="feature-icon" style="background:rgba(52,211,153,0.1);color:#34d399;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
         </div>
-        <h3>/openspec Slash Command</h3>
-        <p>Run <code>/openspec</code> in Claude Code and it analyzes your entire codebase, then generates project-specific modules automatically. No manual editing.</p>
+        <h3>/openspec:configure Slash Command</h3>
+        <p>Run <code>/openspec:configure</code> in Claude Code and it analyzes your entire codebase, then generates project-specific modules automatically. No manual editing.</p>
       </div>
       <div class="feature-card reveal">
         <div class="feature-icon" style="background:rgba(244,114,182,0.1);color:#f472b6;">
@@ -1213,7 +1215,7 @@
       <div class="cmd-card reveal">
         <div class="cmd-icon">&#9881;</div>
         <div>
-          <div class="cmd-name">openspec generate</div>
+          <div class="cmd-name">openspec analyze</div>
           <div class="cmd-desc">Analyze your codebase for AI-powered rule generation</div>
         </div>
       </div>
@@ -1255,10 +1257,12 @@
       <div class="cmd-card reveal">
         <div class="cmd-icon">&#9889;</div>
         <div>
-          <div class="cmd-name">openspec setup-command</div>
-          <div class="cmd-desc">Install <code>/openspec</code> slash command for Claude Code — AI analyzes your codebase and generates modules automatically</div>
+          <div class="cmd-name">openspec install</div>
+          <div class="cmd-desc">Install the <code>/openspec:configure</code> Claude Code Plugin — AI analyzes your codebase and generates modules automatically</div>
+
         </div>
       </div>
+
     </div>
   </div>
 </section>

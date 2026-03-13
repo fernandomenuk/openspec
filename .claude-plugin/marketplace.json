@@ -1,0 +1,27 @@
+{
+  "name": "openspec",
+  "owner": {
+    "name": "Menuk Fernando"
+  },
+  "metadata": {
+    "description": "Official OpenSpec Plugin Marketplace",
+    "version": "0.2.0"
+  },
+  "plugins": [
+    {
+      "name": "openspec",
+      "source": {
+        "path": "./"
+      },
+      "description": "Universal AI context transpiler. Define once. Spec everywhere.",
+      "category": "productivity",
+      "tags": [
+        "ai",
+        "context",
+        "rules",
+        "cursor",
+        "claude"
+      ]
+    }
+  ]
+}

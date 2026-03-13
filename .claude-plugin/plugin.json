@@ -1,0 +1,11 @@
+{
+  "name": "openspec",
+  "version": "0.2.0",
+  "description": "Universal AI context transpiler. Define once. Spec everywhere.",
+  "author": {
+    "name": "Menuk Fernando"
+  },
+  "capabilities": {
+    "commands": true
+  }
+}
