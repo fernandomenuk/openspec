@@ -70,5 +70,10 @@ export async function runAnalyze(
         "\nAI agent: Use the analysis above to write module files in .openspec/modules/. Focus on actual patterns found in the samples."
       )
     );
+    console.log(
+      chalk.cyan("\n🚀 Love OpenSpec? Let others know:") +
+      chalk.white("\n   Star us on GitHub: ") + chalk.bold("https://github.com/fernandomenuk/openspec") +
+      chalk.white("\n   Share on X: ") + chalk.bold("https://x.com/intent/tweet?text=I%20just%20automated%20my%20AI%20context%20with%20OpenSpec!%20One%20source%20of%20truth%20for%20Claude%2C%20Cursor%2C%20and%20Copilot.%20%F0%9F%9A%80%20https%3A%2F%2Fgithub.com%2Ffernandomenuk%2Fopenspec")
+    );
   }
 }

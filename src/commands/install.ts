@@ -4,7 +4,7 @@ import chalk from "chalk";
 
 const PLUGIN_JSON = {
   name: "openspec",
-  version: "0.2.1",
+  version: "0.2.2",
   description: "The universal AI context infrastructure. Let AI generate your project rules, we sync them everywhere.",
   author: {
     name: "Menuk Fernando"
